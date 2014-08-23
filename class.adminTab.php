@@ -10,12 +10,13 @@ class AdminTabs {
 		foreach ($tabs as $key => $value) {
 			$tab = new Tab($value);
 			$this->tabs[] = $tab;
-		}
-	}
 
-	function getCurrentTab() {
-		# Either set to query-parameter or first tab, if no parameter is given
-		$this->currentTab = (isset($_GET['adminOptionTab'])) ? $_GET['adminOptionTab'] : $this->tabs[0]->slug;
+			if (isset($_GET['adminOptionTab'])) {
+				if ($tab->slug === $_GET['adminOptionTab']) $this->currentTab = $tab;
+			}
+		}
+
+		if (!isset($this->currentTab) $this->currentTab = $this->tabs[0];
 	}
 
 	function buildTabs() {
@@ -23,7 +24,7 @@ class AdminTabs {
 
 			$link = add_query_arg(array('adminOptionTab'=>$value->slug)); ?>
 
-			<div class="adminTabs <?php if ($this->currentTab === $value->slug) echo "active"; ?>">
+			<div class="adminTabs <?php if ($this->currentTab === $value) echo "active"; ?>">
 				<a href="<?php echo $link; ?>">
 					<?php echo $value->name; ?>
 				</a>
@@ -32,7 +33,7 @@ class AdminTabs {
 	}
 
 	function assignContent() {
-		//load the file associated with CurrentTab
+		$url = "admintabs/" . 
 	}
 
 }
