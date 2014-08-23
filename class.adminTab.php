@@ -14,12 +14,21 @@ class AdminTabs {
 	}
 
 	function getCurrentTab() {
-		//Either set to query-parameter or first tab, if no parameter is given
+		# Either set to query-parameter or first tab, if no parameter is given
+		$this->currentTab = (isset($_GET['adminOptionTab'])) ? $_GET['adminOptionTab'] : $this->tabs[0]->slug;
 	}
 
 	function buildTabs() {
-		//build query strings
-		//create tabs, with the current tab active
+		foreach ($this->tabs as $key => $value) {
+
+			$link = add_query_arg(array('adminOptionTab'=>$value->slug)); ?>
+
+			<div class="adminTabs <?php if ($this->currentTab === $value->slug) echo "active"; ?>">
+				<a href="<?php echo $link; ?>">
+					<?php echo $value->name; ?>
+				</a>
+			</div> <?php
+		}
 	}
 
 	function assignContent() {
