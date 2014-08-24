@@ -39,7 +39,6 @@ class AdminTabs {
 		$url = "adminTabs/" . $this->currentTab->file;
 		if (!(include $url) == 'OK') echo $url . " could not be included. Please check file name, location and adminTabs configuration.";
 	}
-
 }
 
 class Tab {
@@ -50,24 +49,22 @@ class Tab {
 
 
 	function __construct($tabBasis) {
-		if(is_array($tabBasis)) {
+		if (is_array($tabBasis)) {
 			if (isset($tabBasis[0]))	$this->name = $tabBasis[0];
 			if (isset($tabBasis[1]))	$this->slug = $tabBasis[1];
 			if (isset($tabBasis[2]))	$this->file = $tabBasis[2];
 
-			if(!isset($this->slug))		guessFromName($this->name);
+			if (!isset($this->slug))	guessFromName($this->name);
 
-			if(!isset($this->file))		$this->file = $this->slug;
+			if (!isset($this->file))	$this->file = $this->slug;
 
 		} else $this->guessFromName($tabBasis);
-
-		$this->file .= '.php';
 	}
 
 	function guessFromName($name) {
 		$this->name	= $name;
 		$this->slug	= $this->makeSlug($name);
-		$this->file = $this->slug;
+		$this->file = $this->slug . '.php';
 	}
 
 	function makeSlug($text) {
@@ -80,8 +77,7 @@ class Tab {
 		if (empty($text)) {	return 'n-a'; }
 
   		return $text;
-	}
-	
+	}	
 }
 
 ?>
