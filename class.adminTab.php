@@ -16,7 +16,7 @@ class AdminTabs {
 			}
 		}
 
-		if (!isset($this->currentTab) $this->currentTab = $this->tabs[0];
+		if (!isset($this->currentTab)) $this->currentTab = $this->tabs[0];
 	}
 
 	function buildTabs() {
@@ -24,7 +24,7 @@ class AdminTabs {
 
 			$link = add_query_arg(array('adminOptionTab'=>$value->slug)); ?>
 
-			<div class="adminTabs <?php if ($this->currentTab === $value) echo "active"; ?>">
+			<div class="adminTabs<?php if ($this->currentTab === $value) echo " active"; ?>">
 				<a href="<?php echo $link; ?>">
 					<?php echo $value->name; ?>
 				</a>
@@ -32,14 +32,12 @@ class AdminTabs {
 		}
 
 		wp_register_style('adminTabsStyle', plugins_url('css/adminTabsStyle.css', __FILE__));
-		wp_enqueue_style('AdminTabsStyle');
+		wp_enqueue_style('adminTabsStyle');
 	}
 
 	function assignContent() {
 		$url = "adminTabs/" . $this->currentTab->file;
-
-		if (is_file($url)) include $url;
-		else echo $file . " could not be included. Please check file name, location and adminTabs configuration."
+		if (!(include $url) == 'OK') echo $url . " could not be included. Please check file name, location and adminTabs configuration.";
 	}
 
 }
@@ -61,14 +59,14 @@ class Tab {
 
 			if(!isset($this->file))		$this->file = $this->slug;
 
-		} else guessFromName($tabBasis);
+		} else $this->guessFromName($tabBasis);
 
 		$this->file .= '.php';
 	}
 
 	function guessFromName($name) {
 		$this->name	= $name;
-		$this->slug	= makeSlug($name);
+		$this->slug	= $this->makeSlug($name);
 		$this->file = $this->slug;
 	}
 
