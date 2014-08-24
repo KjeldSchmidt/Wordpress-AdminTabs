@@ -33,7 +33,10 @@ class AdminTabs {
 	}
 
 	function assignContent() {
-		$url = "admintabs/" . 
+		$url = "adminTabs/" . $this->currentTab->file;
+
+		if (is_file($url)) include $url;
+		else echo $file . " could not be included. Please check file name, location and adminTabs configuration."
 	}
 
 }
@@ -66,7 +69,7 @@ class Tab {
 		$this->file = $this->slug;
 	}
 
-	function makeSlug($string) {
+	function makeSlug($text) {
 		$text = preg_replace('~[^\\pL\d]+~u', '-', $text);
 		$text = trim($text, '-');
 		$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
