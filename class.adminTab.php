@@ -30,6 +30,9 @@ class AdminTabs {
 				</a>
 			</div> <?php
 		}
+
+		wp_register_style('adminTabsStyle', plugins_url('css/adminTabsStyle.css', __FILE__));
+		wp_enqueue_style('AdminTabsStyle');
 	}
 
 	function assignContent() {
