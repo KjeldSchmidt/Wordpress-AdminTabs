@@ -30,5 +30,3 @@ Example use:
     </div>
     
     ?>
-
-
